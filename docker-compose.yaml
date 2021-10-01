@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  #iot:
+  #  container_name: iot
+  #  logging:
+  #    options:
+  #      max-size: 10m
+  #  build:
+  #    context: ./
+  #    dockerfile: Dockerfile
+  #  restart: always
+  #  depends_on:
+  #    - nats
+  #  links:
+  #    - nats:nats
+  #  ports:
+  #    - "8080:8080"
+  metrics:
+    image: quay.io/synpse/metrics-nats-example-app
+    container_name: metrics
+    restart: always
+    depends_on:
+      - nats
+    links:
+      - nats:nats
+  nats:
+    image: nats
+    container_name: nats
+    restart: always
+    ports:
+      - 4222:4222
+      - 6222:6222
+      - 8222:8222
+
+networks:
+  app:
+    driver: bridge

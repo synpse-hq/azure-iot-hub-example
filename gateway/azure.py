@@ -3,15 +3,14 @@ import sys
 # Important: Azure is doing somehing fun with their installs. 
 # https://stackoverflow.com/questions/54400662/no-module-named-azure-eventhub-azure-is-not-a-package
 sys.path.insert( 0, '/opt/venv/lib/python3.9/site-packages' )
-#sys.path.insert( 0, '/go/src/github.com/synpse-hq/azure-iot-hub-example/pyenv/lib/python3.9/site-packages' )
+sys.path.insert( 0, '/go/src/github.com/synpse-hq/azure-iot-hub-example/pyenv/lib/python3.9/site-packages' )
 
 import asyncio
 import os
 import uuid
-
 from nats.aio.client import Client as NATS
+from azure.iot.device import IoTHubDeviceClient
 from azure.iot.device import Message
-from azure.iot.device.aio import IoTHubDeviceClient
 
 async def run(loop):
     # nc is the NATS connection to recieve messages from our application
@@ -23,7 +22,7 @@ async def run(loop):
     async def reconnected_cb():
         print("Got reconnected...")
 
-    await nc.connect("nats",
+    await nc.connect(os.getenv("NATS_HOSTNAME"),
                      reconnected_cb=reconnected_cb,
                      disconnected_cb=disconnected_cb,
                      max_reconnect_attempts=-1,

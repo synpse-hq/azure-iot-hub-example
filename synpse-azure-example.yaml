@@ -21,4 +21,6 @@ spec:
       env:
         - name: IOTHUB_DEVICE_CONNECTION_STRING
           fromSecret: azure-conn-string
+        - name: NATS_HOSTNAME
+          value: nats
       restartPolicy: {}
