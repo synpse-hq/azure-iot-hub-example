@@ -15,17 +15,8 @@ spec:
     - name: azure-iot
       image: quay.io/synpse/azure-iot-hub-example
       env:
+        - name: IOTHUB_DEVICE_CONNECTION_STRING
+          fromSecret: azure-conn-string
         - name: NATS_HOSTNAME
           value: nats
-        - name: HOSTNAME
-          # IoT hub DNS name
-          value: "mj-hub.azure-devices.net"
-        - name: DEVICE_ID
-          # device id used when creating a device
-          value: "synpse"
-      secrets:
-      - name: azure-crt
-        filepath: /server/device1.crt
-      - name: azure-key
-        filepath: /server/device1.key
       restartPolicy: {}

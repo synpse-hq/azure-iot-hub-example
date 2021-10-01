@@ -13,6 +13,7 @@
 *.key
 *.json
 *.pub
+*.csr
 pyenv*
 
 # Test binary, built with `go test -c`

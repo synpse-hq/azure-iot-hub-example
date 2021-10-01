@@ -10,7 +10,7 @@ import os
 import uuid
 from nats.aio.client import Client as NATS
 from azure.iot.device import IoTHubDeviceClient
-from azure.iot.device import Message, X509
+from azure.iot.device import Message
 
 async def run(loop):
     # nc is the NATS connection to recieve messages from our application
@@ -18,7 +18,6 @@ async def run(loop):
 
     async def disconnected_cb():
         print("Got disconnected...")
-        os._exit(1)
 
     async def reconnected_cb():
         print("Got reconnected...")
@@ -29,19 +28,9 @@ async def run(loop):
                      max_reconnect_attempts=-1,
                      loop=loop)
 
-    hostname = os.getenv("HOSTNAME")
-    # The device that has been created on the portal using X509 CA signing or Self signing capabilities
-    device_id = os.getenv("DEVICE_ID")
-
-    x509 = X509(
-        cert_file="device1.crt",
-        key_file="device1.key",
-    )
-
-    # The client object is used to interact with your Azure IoT hub.
-    azure_client = IoTHubDeviceClient.create_from_x509_certificate(
-        hostname=hostname, device_id=device_id, x509=x509
-    )
+    conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
+    # Create instance of the device client using the authentication provider
+    azure_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
 
     azure_client.connect()
     print("Connected to Azure IoT Core")
