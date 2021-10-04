@@ -26,10 +26,7 @@ Configure Azure IoT Hub for this example.
 az iot hub create --resource-group MyResourceGroup --name MyIotHub --location eastus --tags synpse=true
 ```
 
-
-## Cert path
-
-1. Create certificate based on https://docs.microsoft.com/en-us/azure/iot-hub/tutorial-x509-self-sign
+2. Create certificate based on https://docs.microsoft.com/en-us/azure/iot-hub/tutorial-x509-self-sign
 
 ```
 Thumbprint 1: SHA1 Fingerprint=56:0E:78:56:74:F1:1B:60:73:AA:7C:8E:12:73:C4:62:01:D5:A3:10 
